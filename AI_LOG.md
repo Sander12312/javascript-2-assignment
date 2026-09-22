@@ -58,3 +58,18 @@
 - implementation was written, understood and testet by me.
 
 ## 21 september 2026
+
+**Tool used:** ChatGPT
+
+**Purpose:**
+
+- Used ChatGPT for debugging while finishing some of the remaining functionality.
+- Got help reorganizing existing code when working with search, editing and deleting posts.
+- Got help debugging profile functionality and understanding the API requests for following and unfollowing users.
+
+**Outcome:**
+
+- Fixed problems with search and profile navigation.
+- Got editing and deleting posts working correctly.
+- Got viewing other user profiles, their posts, and follow/unfollow functionality working.
+- Tested the functionality while implementing the changes and used the explanations to understand how the different parts worked together.

@@ -159,24 +159,20 @@ function displayPosts(posts) {
     if (feedPosts) {
         feedPosts.innerHTML = "";
 
-
         posts.forEach((postItem) => {
             feedPosts.innerHTML += `
-                <h3>${postItem.title}</h3>
+                <div class="post">
+                    <h3>${postItem.title}</h3>
+                    <p>${postItem.body}</p>
 
-                <p>${postItem.body}</p>
-
-                <button
-                    class="view-post-button"
-                    data-post-id="${postItem.id}"
-                >
-                    View Post
-                </button>
-
-                <hr>
+                    <button
+                        class="view-post-button"
+                        data-post-id="${postItem.id}">
+                        View Post
+                    </button>
+                </div>
             `;
         });
-
 
         const viewPostButtons =
             document.querySelectorAll(".view-post-button");
