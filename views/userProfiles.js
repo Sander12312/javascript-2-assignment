@@ -2,28 +2,27 @@ import { feed } from "./feed.js";
 
 const api_key = "3956091a-2141-44f0-ae9e-b7cb52e626e1";
 
+/**
+ * Displays the user profile page for a given username.
+ * @param {string} username - The username of the profile to display.
+ */
 export function userProfiles(username) {
     const mainContent = document.getElementById("main-content");
 
     if (mainContent) {
         mainContent.innerHTML = `
             <h1>${username}</h1>
-
             <button id="back-to-feed-button">
                 Back to Feed
             </button>
-
             <button id="follow-button">
                 Follow
             </button>
-
             <h2>Posts</h2>
 
             <div id="profile-posts"></div>
         `;
 
-
-        // Back to Feed
         const backToFeedButton =
             document.getElementById("back-to-feed-button");
 
@@ -32,13 +31,8 @@ export function userProfiles(username) {
                 feed();
             });
         }
-
-
-        // Get posts from this user
         getUserPosts(username);
 
-
-        // Check if logged in user already follows this profile
         checkFollowing(username);
     }
 }
@@ -62,15 +56,11 @@ async function getUserPosts(username) {
         if (!response.ok) {
             throw new Error("Failed to fetch user posts.");
         }
-
         const data = await response.json();
-
         const profilePosts =
             document.getElementById("profile-posts");
-
         if (profilePosts) {
             profilePosts.innerHTML = "";
-
             data.data.forEach((post) => {
                 profilePosts.innerHTML += `
                     <div class="post">
@@ -107,19 +97,14 @@ async function checkFollowing(username) {
                 }
             }
         );
-
         if (!response.ok) {
             throw new Error("Failed to check following.");
         }
-
         const data = await response.json();
-
         const isFollowing = data.data.following.some(
             (profile) => profile.name === username
         );
-
         updateFollowButton(username, isFollowing);
-
     } catch (error) {
         console.error(
             "Error checking following:",
@@ -128,22 +113,17 @@ async function checkFollowing(username) {
     }
 }
 
-
 function updateFollowButton(username, isFollowing) {
     const followButton =
         document.getElementById("follow-button");
-
     if (!followButton) {
         return;
     }
-
     if (isFollowing) {
         followButton.textContent = "Unfollow";
-
         followButton.onclick = () => {
             unfollowUser(username);
         };
-
     } else {
         followButton.textContent = "Follow";
 
@@ -157,7 +137,6 @@ function updateFollowButton(username, isFollowing) {
 async function followUser(username) {
     try {
         const token = localStorage.getItem("token");
-
         const response = await fetch(
             `https://v2.api.noroff.dev/social/profiles/${username}/follow`,
             {
@@ -172,11 +151,8 @@ async function followUser(username) {
         if (!response.ok) {
             throw new Error("Failed to follow user.");
         }
-
         console.log("User followed successfully.");
-
         updateFollowButton(username, true);
-
     } catch (error) {
         console.error(
             "Error following user:",
@@ -189,7 +165,6 @@ async function followUser(username) {
 async function unfollowUser(username) {
     try {
         const token = localStorage.getItem("token");
-
         const response = await fetch(
             `https://v2.api.noroff.dev/social/profiles/${username}/unfollow`,
             {
@@ -200,15 +175,11 @@ async function unfollowUser(username) {
                 }
             }
         );
-
         if (!response.ok) {
             throw new Error("Failed to unfollow user.");
         }
-
         console.log("User unfollowed successfully.");
-
         updateFollowButton(username, false);
-
     } catch (error) {
         console.error(
             "Error unfollowing user:",

@@ -7,10 +7,8 @@ const api_key="3956091a-2141-44f0-ae9e-b7cb52e626e1";
 
 export function feed() {
     const mainContent = document.getElementById("main-content");
-
     mainContent.innerHTML = `
         <h1>Feed</h1>
-
         <div class="search-bar">
             <input
                 type="text"
@@ -20,7 +18,6 @@ export function feed() {
             <button id="search-button">Search</button>
             <button id="profile-button">Profile</button>
         </div>
-
         <div class="search-profiles">
             <input
                 type="text"
@@ -31,37 +28,28 @@ export function feed() {
                 Search Profiles
             </button>
         </div>
-
         <div id="feed-posts"></div>
     `;
 
-
     const profileButton =
         document.getElementById("profile-button");
-
     if (profileButton) {
         profileButton.addEventListener("click", () => {
             profile();
         });
     }
-
-
     const searchButton =
         document.getElementById("search-button");
-
     if (searchButton) {
         searchButton.addEventListener("click", () => {
             const searchInput =
                 document.getElementById("search-input");
-
             if (searchInput) {
                 const searchTerm = searchInput.value;
-
                 searchPosts(searchTerm);
             }
         });
     }
-
 
     const searchProfileButton =
         document.getElementById("search-profile-button");
@@ -70,17 +58,13 @@ export function feed() {
         searchProfileButton.addEventListener("click", () => {
             const searchProfileInput =
                 document.getElementById("search-profile-input");
-
             if (searchProfileInput) {
                 const searchProfileTerm =
                     searchProfileInput.value;
-
                 searchProfiles(searchProfileTerm);
             }
         });
     }
-
-
     fetchPosts();
 }
 
@@ -89,7 +73,6 @@ export function feed() {
 async function fetchPosts() {
     try {
         const token = localStorage.getItem("token");
-
         const response = await fetch(
             "https://v2.api.noroff.dev/social/posts",
             {
@@ -101,23 +84,23 @@ async function fetchPosts() {
             }
         );
 
-
         if (response.ok) {
             const data = await response.json();
-
             displayPosts(data.data);
-
         } else {
             throw new Error("Failed to fetch posts.");
         }
-
-
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
 }
 
 
+/**
+ * Searches for posts based on a search term.
+ * @param {string} searchTerm - The term to search for.
+ * @returns {Promise<void>} - A promise that resolves when the search is complete.
+ */
 
 async function searchPosts(searchTerm) {
     try {
@@ -137,20 +120,19 @@ async function searchPosts(searchTerm) {
 
         if (response.ok) {
             const data = await response.json();
-
             displayPosts(data.data);
-
         } else {
             throw new Error("Failed to search posts.");
         }
-
-
     } catch (error) {
         console.error("Error searching posts:", error);
     }
 }
 
-
+/**
+ * Displays post items in the feed.
+ * @param {Array} posts - The posts that will be displayed
+ */
 
 function displayPosts(posts) {
     const feedPosts =
